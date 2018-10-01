@@ -9,6 +9,7 @@ import pymongo
 import urllib.parse
 
 
+'''中文复句整理及模板'''
 class EventsExtraction:
     def __init__(self):
         self.but_wds = self.pattern_but()
@@ -162,22 +163,22 @@ class EventsExtraction:
                 datas.append(data)
         return datas
 
-
+'''基于给定语料与模板的事件抽取，假定你选择的是Mongodb数据库'''
 class TextMining:
     def __init__(self):
-        mongo_host = '127.0.0.1'
-        mongo_port = 28017
-        mongo_db = 'news_industry'
-        mongo_col = 'content'
-        username = urllib.parse.quote_plus("root")
-        password = urllib.parse.quote_plus("fstxlab@2017!")
+        mongo_host = '127.0.0.1' # 你数据库的ip
+        mongo_port = 28017 #你数据库端口
+        mongo_db = 'news' #数据库名称
+        mongo_col = 'news_data' #数据表名称
+        username = urllib.parse.quote_plus("root")#用户名
+        password = urllib.parse.quote_plus("12345678") #密码
         client = pymongo.MongoClient(
             'mongodb://{}:{}@{}:{}'.format(username, password, mongo_host, mongo_port))
         self.db = client[mongo_db]
         self.col = self.db[mongo_col]
         self.extractor = EventsExtraction()
 
-    '''批量跑数据库中的数据'''
+    '''批量跑数据库中的数据，并插入相应数据库当中'''
     def process_mongonews(self):
         count = 0
         for item in self.col.find():
@@ -195,65 +196,7 @@ class TextMining:
                 print(e)
             if count % 10000 == 0:
                 print(count)
-    '''count event type'''
-    def count_event(self):
-        from collections import Counter
-        events = []
-        count = 0
-        f = open('event_type_dict.txt', 'w+')
-        for item in self.db['event_extract'].find():
-            datas = item['data']
-            for data in datas:
-                data_type = data['type']
-                tuples = data['tuples']
-                pre_wd = tuples['pre_wd']
-                post_wd = tuples['post_wd']
-                pair = '_'.join([data_type, pre_wd, post_wd])
-                events.append(pair)
-            count += 1
-            if count % 10000 == 0:
-                print(count)
-        event_dict = Counter(events).most_common()
-        for i in event_dict:
-            f.write(i[0] + '@' + str(i[1]) + '\n')
-        f.close()
-    
-    '''collect event into files'''
-    def collect_event(self):
-        f_more = open('event_more.txt', 'w+')
-        f_condition = open('event_condition.txt', 'w+')
-        f_but = open('event_but.txt', 'w+')
-        f_seq = open('event_seq.txt', 'w+')
-        count = 0
-        for item in self.db['event_extract'].find():
-            count += 1
-            if count % 10000 == 0:
-                print(count)
-            datas = item['data']
-            for data in datas:
-                data_type = data['type']
-                tuples = data['tuples']
-                pre_wd = tuples['pre_wd']
-                post_wd = tuples['post_wd']
-
-                pre_part = tuples['pre_part']
-                post_part = tuples['post_part '] 
-                if len(post_part) >1 and len(pre_part) > 1:
-                    tmp = '###'.join([pre_wd, pre_part, post_wd, post_part])
-                    if data_type == 'condition':
-                        f_condition.write(tmp + '\n')
-                    elif data_type == 'more':
-                        f_more.write(tmp + '\n')
-                    elif data_type == 'seq':
-                        f_seq.write(tmp + '\n')
-                    elif data_type == 'but':
-                        f_but.write(tmp + '\n')
-        f_more.close()
-        f_condition.close()
-        f_but.close()
-        f_seq.close()
 
 if __name__ == '__main__':
     handler = TextMining()
-    handler.collect_event()
-
+    handler.process_mongonews()
