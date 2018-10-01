@@ -4,7 +4,7 @@ chinese compound event extraction，中文复合事件抽取，包括条件事�
 # 关于项目
 目前，知识图谱在学术界如火如荼地进行，但受限于知识图谱各个环节中的性能问题，还尚未能够在工业界大规模运用。而与知识图谱中以实体为知识节点，实体关系为实体关系边对知识进行组织不同，事件图谱，又称事理图谱，在目前也是很火的一个研究方向。就事理图谱而言,其从技术实现难度上不亚于知识图谱。  
 本人目前在事件图谱上的实验工作有：  
-果顺承事件图谱(https://github.com/liuhuanyong/SequentialEventExtration)  
+顺承事件图谱(https://github.com/liuhuanyong/SequentialEventExtration)  
 因果事件图谱(https://github.com/liuhuanyong/CausalityEventExtraction)  
 目前，想到其实中文的事件在显式上的表达上遵循的是中文的复句表现形式。因此，打算对阶段性的工作进行整理，进一步形成中文复合事件抽取项目(https://github.com/liuhuanyong/ComplexEventExtraction)  
 接下来，将自己对事理图谱工作的一些理解整理出来，对事件图谱的类型、事件表示的相关方面进行归纳  。
