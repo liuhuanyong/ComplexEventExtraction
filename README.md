@@ -103,3 +103,8 @@ chinese compound event extraction，中文复合事件抽取，包括条件事�
 3、实验表明，汉语显示标记其实在中文文本当中还是用的很普遍的，我统计了以下，跑了1000W文本，有超过半数的文本中包含以上模式。因此，如果能够把显示事件图谱做好，感觉用处还是很多的。  
 4、本项目还有很多不足，比如模式上，比如对事件类型和事件表示的看法上，欢迎补充。  
 5、If any question about the project or me ,see https://liuhuanyong.github.io/  
+
+如有自然语言处理、知识图谱、事理图谱、社会计算、语言资源建设等问题或合作，可联系我：      
+1、我的github项目介绍：https://liuhuanyong.github.io   
+2、我的csdn博客：https://blog.csdn.net/lhy2014   
+3、about me:刘焕勇，中国科学院软件研究所，lhy_in_blcu@126.com   
